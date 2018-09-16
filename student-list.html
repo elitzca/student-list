@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="student-list.css">
+    <title>Student List</title>
+</head>
+
+<body>
+    <div class="sort-buttons">
+        <button id="o-first">Sort by First Name</button>
+        <button id="o-last">Sort by Last Name</button>
+    </div>
+
+    <div id="paper-list">
+        <h1>Frontend development students 2018</h1>
+        <table>
+
+            <tbody class="table-body">
+                <!-- student list HERE -->
+            </tbody>
+        </table>
+    </div>
+
+    <div id="modal-container" class="hidden">
+        <div id="beautify-container">
+            <span id="close-button">X</span>
+            <div id="modal-window">
+                <img id="profile-pic" src="profile.png" alt="anonymous user">
+                <h1>Multimedia Student #4732</h1>
+                <p><strong>E-mail:</strong> hris3852@stud.kea.dk</p>
+                <p><strong>Telefone:</strong> 65 92 37 16</p>
+                <p><strong>Birth Date:</strong> 31.06.1998</p>
+                <p><strong>Hobbies:</strong></p>
+                <img id="meme" src="dont-get-it.png" alt="">
+            </div>
+        </div>
+    </div>
+
+    <script src="student-list.js"></script>
+</body>
+
+</html>

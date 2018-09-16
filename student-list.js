@@ -1,8 +1,11 @@
 "use strict";
 const firstButton = document.querySelector("#o-first");
 const lastButton = document.querySelector("#o-last");
-const infoContainer = document.querySelector(".info");
 const tableBody = document.querySelector(".table-body");
+const detailsContainer = document.querySelector("#modal-container");
+const closeDetailsButton = document.querySelector("#close-button");
+const detailsModal = document.querySelector("#modal-window");
+const studentModal = document.querySelector("#studentModal");
 const JSON = "frontenders2018.json";
 
 let students = [];
@@ -44,17 +47,11 @@ Student.prototype.toString = function() {
 function displayStudents(toDisplay) {
   tableBody.innerHTML = "";
   toDisplay.forEach((person, index) => {
-    /* console.log(person); -> 
-          Student {firstNames: "Elísabet Rós", lastName: Array(1)}
-          firstNames:"Elísabet Rós"
-          lastName:["Valsdóttir"]  ---- why array?
-          --most probably the first would have been an array itself but we add the .toString method
-            }*/
     tableBody.innerHTML += `
             <tr>
                 <td>${person.toString()}</td>
                 <td>
-                    <button class='info-btn' type='button' data-target='${index}'>More info...</button>
+                    <button class='details-btn' type='button' data-target='${index}'>Details</button>
                 </td>
                 <td>
                     <button class='delete-btn' type='button' data-target='${index}'>X</button>
@@ -63,8 +60,8 @@ function displayStudents(toDisplay) {
         `;
   });
 
-  addDeleteHandlers();
-  addInfoHandlers();
+  deleteStudent();
+  showDetails();
 }
 
 //Eventlistener First Name/Last Name sorting button
@@ -85,7 +82,7 @@ function orderByFirstName() {
 
 function orderByLastName() {
   const sortedStudentLast = students.sort(sortNameLast());
-  console.log(sortedStudentLast);
+  //console.log(sortedStudentLast);
   displayStudents(sortedStudentLast);
 }
 
@@ -100,8 +97,6 @@ function sortNameFirst() {
 }
 
 function sortNameLast() {
-  //console.log(nameChoice);
-  // displays "firstNames" or "lastName" depending on button clicked
   return function(a, b) {
     if (a.lastName > b.lastName) {
       return 1;
@@ -111,12 +106,12 @@ function sortNameLast() {
   };
 }
 
-function addDeleteHandlers() {
-  const buttonpersonents = document.querySelectorAll("button.delete-btn");
-  //console.log(buttonpersonents);
-  buttonpersonents.forEach(btnpersonent => {
-    btnpersonent.addEventListener("click", function() {
-      const index = btnpersonent.getAttribute("data-target");
+function deleteStudent() {
+  const deleteButtons = document.querySelectorAll("button.delete-btn");
+  //console.log(deleteButtons);
+  deleteButtons.forEach(deleteButton => {
+    deleteButton.addEventListener("click", function() {
+      const index = deleteButton.getAttribute("data-target");
       //console.log(index);
 
       // remove the student
@@ -126,20 +121,21 @@ function addDeleteHandlers() {
   });
 }
 
-function addInfoHandlers() {
-  const buttonpersonents = document.querySelectorAll("button.info-btn");
+function showDetails() {
+  const detailsButtons = document.querySelectorAll("button.details-btn");
+  //console.log(detailsButtons);
 
-  buttonpersonents.forEach(btnpersonent => {
-    btnpersonent.addEventListener("click", function() {
-      const index = btnpersonent.getAttribute("data-target");
-      const studentName = students[index].toString();
+  detailsButtons.forEach(detailsButton => {
+    detailsButton.addEventListener("click", showModal);
 
-      // display student info
-      infoContainer.innerHTML = `
-                <p>INFO ABOUT STUDENT</p>
-                <p>Name: ${studentName}</p>
-                <p>Study Programme: Multimedia Design & Communication</p>
-            `;
-    });
+    function showModal() {
+      detailsContainer.classList.remove("hidden");
+    }
+
+    closeDetailsButton.addEventListener("click", closeDetails);
+
+    function closeDetails() {
+      detailsContainer.classList.add("hidden");
+    }
   });
 }
